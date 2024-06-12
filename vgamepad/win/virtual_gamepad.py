@@ -376,6 +376,7 @@ class VDS4Gamepad(VGamepad):
         """
         adjusted_x = x_value_float + self.joystick_offset_x
         adjusted_y = y_value_float + self.joystick_offset_y
+        print(f"Setting right joystick with offsets - X: {adjusted_x}, Y: {adjusted_y}")  # Debug print
         self.right_joystick(128 + round(adjusted_x * 127), 128 + round(adjusted_y * 127))
 
     def directional_pad(self, direction):
@@ -426,4 +427,6 @@ class VDS4Gamepad(VGamepad):
     def set_joystick_offset(self, offset_x, offset_y):
         self.joystick_offset_x = offset_x
         self.joystick_offset_y = offset_y
+        print(f"Joystick offsets set - X: {self.joystick_offset_x}, Y: {self.joystick_offset_y}")  # Debug print
+
 
