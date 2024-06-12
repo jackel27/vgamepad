@@ -251,6 +251,8 @@ class VDS4Gamepad(VGamepad):
     def __init__(self):
         super().__init__()
         self.report = self.get_default_report()
+        self.joystick_offset_x = 0.0
+        self.joystick_offset_y = 0.0
         self.update()
 
     def get_default_report(self):
@@ -372,7 +374,9 @@ class VDS4Gamepad(VGamepad):
 
         :param: float between -1.0 and 1.0 (0 = neutral position)
         """
-        self.right_joystick(128 + round(x_value_float * 127), 128 + round(y_value_float * 127))
+        adjusted_x = x_value_float + self.joystick_offset_x
+        adjusted_y = y_value_float + self.joystick_offset_y
+        self.right_joystick(128 + round(adjusted_x * 127), 128 + round(adjusted_y * 127))
 
     def directional_pad(self, direction):
         """
@@ -417,3 +421,9 @@ class VDS4Gamepad(VGamepad):
 
     def target_alloc(self):
         return vcli.vigem_target_ds4_alloc()
+
+    # Methods to set joystick offsets
+    def set_joystick_offset(self, offset_x, offset_y):
+        self.joystick_offset_x = offset_x
+        self.joystick_offset_y = offset_y
+
